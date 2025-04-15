@@ -8,7 +8,6 @@ import { color } from "chart.js/helpers";
 
 
 const App = () => {
-  // const [transactions, setTransactions] = useState([]);
   const [transactions, setTransactions] = useState([
     { id: 1, description: "Shopping", amount: 2000, category: "Study Table", date: "2025-01-01" },
     { id: 2, description: "Rent", amount: 800, category: "Housing", date: "2025-01-05" },
@@ -16,8 +15,6 @@ const App = () => {
   ]);
   
   
-
-  // Load data from localStorage when the app mounts
   useEffect(() => {
     const savedTransactions = JSON.parse(localStorage.getItem("transactions"));
     if (savedTransactions) {
@@ -25,17 +22,14 @@ const App = () => {
     }
   }, []);
 
-  // Save data to localStorage whenever transactions state changes
   useEffect(() => {
     localStorage.setItem("transactions", JSON.stringify(transactions));
   }, [transactions]);
 
-  // Function to add a new transaction
   const addTransaction = (transaction) => {
     setTransactions([...transactions, transaction]);
   };
 
-  // Function to delete a transaction
   const deleteTransaction = (id) => {
     setTransactions(transactions.filter((transaction) => transaction.id !== id));
   };

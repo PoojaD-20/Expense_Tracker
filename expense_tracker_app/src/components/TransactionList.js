@@ -1,6 +1,5 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import "./TransactionList.css"; // Custom styles
 
 const TransactionList = ({ transactions, deleteTransaction }) => (
   <div className="transaction-list container mt-4">
@@ -30,4 +29,3 @@ const TransactionList = ({ transactions, deleteTransaction }) => (
 );
 
 export default TransactionList;
- 

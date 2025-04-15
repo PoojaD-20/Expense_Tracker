@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css"; // Ensure Bootstrap is imported
-// import "./AddTransaction.css"; // Custom styles
+import "bootstrap/dist/css/bootstrap.min.css"; 
+
 
 const AddTransaction = ({ addTransaction }) => {
   const [form, setForm] = useState({ type: "income", description: "", amount: "", category: "", date: "" });
