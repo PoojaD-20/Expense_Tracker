@@ -4,6 +4,7 @@ import TransactionList from "./components/TransactionList";
 import ExpenseChart from "./components/ExpenseChart";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import "./App.css";
 import { color } from "chart.js/helpers";
 
 
@@ -14,24 +15,52 @@ const App = () => {
     { id: 3, description: "Groceries", amount: 150, category: "Food", date: "2025-01-07" }
   ]);
   
-  
+const Backend_Url=process.env.REACT_APP_URL;
+  // useEffect(() => {
+  //   const savedTransactions = JSON.parse(localStorage.getItem("transactions"));
+  //   if (savedTransactions) {
+  //     setTransactions(savedTransactions);
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   localStorage.setItem("transactions", JSON.stringify(transactions));
+  // }, [transactions]);
+
+  // const addTransaction = (transaction) => {
+  //   setTransactions([...transactions, transaction]);
+  // };
+
+  // const deleteTransaction = (id) => {
+  //   setTransactions(transactions.filter((transaction) => transaction.id !== id));
+  // };
+
   useEffect(() => {
-    const savedTransactions = JSON.parse(localStorage.getItem("transactions"));
-    if (savedTransactions) {
-      setTransactions(savedTransactions);
-    }
+    fetch(`${Backend_Url}/api/transactions`)
+      .then(res => res.json())
+      .then(data => setTransactions(data))
+      .catch(err => console.error("Error fetching transactions:", err));
   }, []);
-
-  useEffect(() => {
-    localStorage.setItem("transactions", JSON.stringify(transactions));
-  }, [transactions]);
-
-  const addTransaction = (transaction) => {
-    setTransactions([...transactions, transaction]);
+  
+  
+  const addTransaction = async (transaction) => {
+    const res = await fetch(`${Backend_Url}/api/transactions`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(transaction),
+    });
+    const newTransaction = await res.json();
+    setTransactions([...transactions, newTransaction]);
   };
-
-  const deleteTransaction = (id) => {
-    setTransactions(transactions.filter((transaction) => transaction.id !== id));
+  
+  console.log("url:", Backend_Url);
+  
+  const deleteTransaction = async (id) => {
+    console.log("del id:",id);
+    await fetch(`${Backend_Url}/api/transactions/${id}`, {
+      method: "DELETE",
+    });
+    setTransactions(transactions.filter((transaction) => transaction._id !== id));
   };
 
   const [darkMode, setDarkMode] = useState(
@@ -49,7 +78,7 @@ const App = () => {
       <button className="btn btn-outline-info text-primary text-bold my-2" onClick={() => setDarkMode(!darkMode)}>
           {darkMode ? "Light Mode" : "Dark Mode"}
       </button>
-      <AddTransaction addTransaction={addTransaction} />
+      <AddTransaction addTransaction={addTransaction} darkMode={darkMode}/>
       <TransactionList transactions={transactions} deleteTransaction={deleteTransaction} />
       <ExpenseChart transactions={transactions} />
     </div>

@@ -7,7 +7,7 @@ const TransactionList = ({ transactions, deleteTransaction }) => (
 
     <div className="row">
       {transactions.map((transaction) => (
-        <div key={transaction.id} className="col-md-6">
+        <div key={transaction._id} className="col-md-6">
           <div className={`transaction-card card shadow-sm p-3 mb-3 ${transaction.type === "income" ? "border-success" : "border-danger"}`}>
             <div className="d-flex justify-content-between">
               <div>
@@ -18,7 +18,7 @@ const TransactionList = ({ transactions, deleteTransaction }) => (
                 {transaction.amount}
               </span>
             </div>
-            <button className="btn btn-sm btn-outline-danger mt-2 w-100" onClick={() => deleteTransaction(transaction.id)}>
+            <button className="btn btn-sm btn-outline-danger mt-2 w-100" onClick={() => deleteTransaction(transaction._id)}>
               Delete
             </button>
           </div>

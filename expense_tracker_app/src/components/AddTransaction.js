@@ -2,28 +2,29 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css"; 
 
 
-const AddTransaction = ({ addTransaction }) => {
+const AddTransaction = ({ addTransaction ,darkMode}) => {
   const [form, setForm] = useState({ type: "income", description: "", amount: "", category: "", date: "" });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!form.description || !form.amount || !form.date) return;
 
-    const newTransaction = { ...form, id: Date.now(), amount: parseFloat(form.amount) };
+    const newTransaction = { ...form, amount: parseFloat(form.amount) };
     addTransaction(newTransaction);
     setForm({ type: "income", description: "", amount: "", category: "", date: "" });
   };
 
   return (
-    <form className="add-transaction-form p-4 shadow rounded bg-light" onSubmit={handleSubmit}>
+    <div className={`${darkMode ? "bg-light text-dark" : "bg-dark text-light"}`}>
+    <form className={`add-transaction-form p-4 shadow rounded `} onSubmit={handleSubmit}>
       <h3 className="text-center mb-3">Add New Transaction</h3>
-      <label className="mr-2 mb-2">Category</label>
+      {/* <label className={`${darkMode ? "bg-light text-dark" : "bg-dark text-light"} mr-2 mb-2`}>Category</label>
       <select value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })}>
         <option value="income">Income</option>
         <option value="expense">Expense</option>
-      </select>
+      </select> */}
       <div className="mb-3">
-        <label className="form-label">Description</label>
+        <label className={`${darkMode ? "bg-light text-dark" : "bg-dark text-light"} form-label`}>Description</label>
         <input
           type="text"
           className="form-control"
@@ -34,7 +35,7 @@ const AddTransaction = ({ addTransaction }) => {
       </div>
 
       <div className="mb-3">
-        <label className="form-label">Amount</label>
+        <label className={`${darkMode ? "bg-light text-dark" : "bg-dark text-light"} form-label`}>Amount</label>
         <input
           type="number"
           className="form-control"
@@ -45,7 +46,7 @@ const AddTransaction = ({ addTransaction }) => {
       </div>
 
       <div className="mb-3">
-        <label className="form-label">Category</label>
+        <label className={`${darkMode ? "bg-light text-dark" : "bg-dark text-light"} form-label`}>Category</label>
         <input
           type="text"
           className="form-control"
@@ -56,7 +57,7 @@ const AddTransaction = ({ addTransaction }) => {
       </div>
 
       <div className="mb-3">
-        <label className="form-label">Date</label>
+        <label className={`${darkMode ? "bg-light text-dark" : "bg-dark text-light"} form-label`}>Date</label>
         <input
           type="date"
           className="form-control"
@@ -67,6 +68,7 @@ const AddTransaction = ({ addTransaction }) => {
 
       <button type="submit" className="btn btn-primary w-100">Add Transaction</button>
     </form>
+    </div>
   );
 };
 
